@@ -68,4 +68,30 @@ router.post('/ask', function(req, res, next) {
   router.db.end();
 });
 
+router.get('/q/:qid', function(req, res, next) {
+  var params = [req.params.qid];
+  router.db.query('SELECT *from question where id=? limit 1', params, function(err, rows, fields) {
+    if (err) throw err;
+    if (rows.length === 0) {
+      console.log('no user');
+    } else {
+      var question = rows[0];
+      res.render('question', { title: question.title, question: question });
+    }
+  });
+});
+
+router.get('/answer/:qid', function(req, res, next) {
+  var params = [req.params.qid];
+  router.db.query('SELECT *from question where id=? limit 1', params, function(err, rows, fields) {
+    if (err) throw err;
+    if (rows.length === 0) {
+      console.log('no user');
+    } else {
+      var question = rows[0];
+      res.render('question', { title: question.title, question: question });
+    }
+  });
+});
+
 module.exports = router;
