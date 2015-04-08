@@ -45,6 +45,8 @@ app.use(function (req, res, next) {
 app.use(function (req, res, next) {
   console.log('add template engine global var ', Date.now(), req.session.uid);
   res.locals.cur_uid = req.session.uid;
+    res.locals.cur_uid = req.session.uid = 4;
+  };
   next();
 });
 

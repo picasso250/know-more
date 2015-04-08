@@ -24,15 +24,15 @@ router.post('/login', function(req, res, next) {
     if (err) throw err;
     if (rows.length === 0) {
       console.log('no user');
+      res.json({code: 1, message: 'no user'});
     } else {
       var user = rows[0];
       console.log(user.id, 'login');
       var sess = req.session
       sess.uid = user.id;
-      res.render('login', { title: '登录成功' });
+      res.json({code: 0, data: {url: '/'}});
     }
   });
-  // res.render('login', { title: '登录' });
   router.db.end();
 });
 
