@@ -76,12 +76,18 @@ router.get('/q/:qid', function(req, res, next) {
       console.log('no user');
     } else {
       var question = rows[0];
-      // how to global jade var?
-      var data = { title: question.title, question: question, show_answer: req.session.uid > 0 }
-      res.render('question', data);
+      router.db.query('SELECT *from answer where qid=? limit 111', params, function(err, rows, fields) {
+        router.db.end();
+        if (err) throw err;
+        var data = {
+          title: question.title,
+          question: question,
+          answers: rows,
+          show_answer: req.session.uid > 0 }
+        res.render('question', data);
+      })
     }
   });
-  router.db.end();
 });
 
 router.post('/answer/:qid', function(req, res, next) {
