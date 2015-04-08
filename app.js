@@ -43,6 +43,11 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(function (req, res, next) {
+  res.locals.cur_uid = req.session.uid;
+  next();
+});
+
 app.use('/', routes);
 app.use('/users', users);
 
