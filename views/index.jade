@@ -3,3 +3,8 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  for q in questions
+    li
+      h2
+        a(href="/q/#{q.id}")= q.title
+      p= q.description

@@ -3,7 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: '我就是想知道更多' });
+  router.db.query('SELECT *from question limit 111', function(err, rows, fields) {
+    if (err) throw err;
+    res.render('index', { title: '我就是想知道更多', questions: rows});
+  });
+  // res.render('login', { title: '登录' });
+  router.db.end();
 });
 
 router.get('/new/question', function(req, res, next) {
