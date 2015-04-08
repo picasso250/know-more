@@ -1,5 +1,5 @@
 $(function () {
-	var alert = $('.alert');
+	var Alert = $('#Alert');
 	var postForm = $('form[method="post"][role=post]').on('submit', function (e) {
 		e.preventDefault();
 		var $this = $(this);
@@ -11,9 +11,12 @@ $(function () {
 					location.href = ret.data.url;
 					return;
 				}
+				if (ret.message) {
+					window.alert(ret.message);
+				};
 			}
 			$btn.button('reset');
-			alert.removeClass('alert-hidden').text(ret.message);
+			Alert.removeClass('alert-hidden').text(ret.message);
 		}, 'json');
 	});
 });

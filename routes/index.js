@@ -40,16 +40,21 @@ router.get('/register', function(req, res, next) {
   res.render('register', { title: '注册' });
 });
 router.post('/register', function(req, res, next) {
-
-  // todo encrypt
-  router.db.query('INSERT INTO user SET ?', req.body, function(err, result) {
+  var params = [req.body.email];
+  router.db.query('SELECT *from user where email=? limit 1', params, function(err, rows, fields) {
     if (err) throw err;
-
-    console.log(result.insertId);
-  });
-
-  router.db.end();
-  res.render('register', { title: '注册成功' });
+    if (rows.length > 0) {
+      res.json({code: 1, message: 'user exists'});
+      return;
+    };
+    // todo encrypt
+    router.db.query('INSERT INTO user SET ?', req.body, function(err, result) {
+      if (err) throw err;
+      router.db.end();
+      console.log(result.insertId);
+      res.json({code: 0, message: 'register ok'});
+    });
+  })
 });
 
 router.get('/admin', function(req, res, next) {
