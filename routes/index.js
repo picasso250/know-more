@@ -76,6 +76,7 @@ router.get('/q/:qid', function(req, res, next) {
       console.log('no user');
     } else {
       var question = rows[0];
+      // how to global jade var?
       var data = { title: question.title, question: question, show_answer: req.session.uid > 0 }
       res.render('question', data);
     }
@@ -99,7 +100,7 @@ router.post('/answer/:qid', function(req, res, next) {
         if (err) throw err;
         router.db.end();
         console.log(result.insertId);
-        res.render('index', { title: '回答成功' });
+        res.render('ask', { title: '回答成功' });
       });
     }
   });
