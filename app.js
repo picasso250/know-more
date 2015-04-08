@@ -25,8 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'wocao',
   cookie: { maxAge: 60000 },
-  resave: true,
-  saveUninitialized: true
+  resave: true, // todo develop and production
+  saveUninitialized: true // todo develop and production
 }))
 
 app.use(function (req, res, next) {

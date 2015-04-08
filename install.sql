@@ -9,3 +9,9 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_uni_email` (`email`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+CREATE TABLE `know_more`.`question` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `description` TEXT NULL,
+  `create_time` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`));

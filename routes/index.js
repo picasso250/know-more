@@ -28,33 +28,39 @@ router.post('/login', function(req, res, next) {
     }
   });
   // res.render('login', { title: '登录' });
+  router.db.end();
 });
 
 router.get('/register', function(req, res, next) {
   res.render('register', { title: '注册' });
 });
 router.post('/register', function(req, res, next) {
-  var mysql      = require('mysql');
-  var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'root',
-    database : 'know_more'
-  });
 
   // todo encrypt
-  connection.query('INSERT INTO user SET ?', req.body, function(err, result) {
+  router.db.query('INSERT INTO user SET ?', req.body, function(err, result) {
     if (err) throw err;
 
     console.log(result.insertId);
   });
 
-  connection.end();
+  router.db.end();
   res.render('register', { title: '注册成功' });
 });
 
 router.get('/admin', function(req, res, next) {
   res.render('index', { title: '这里是后台' });
+});
+
+router.get('/ask', function(req, res, next) {
+  res.render('ask', { title: '提问' });
+});
+router.post('/ask', function(req, res, next) {
+  router.db.query('INSERT INTO question SET ?', req.body, function(err, result) {
+    if (err) throw err;
+    console.log(result.insertId);
+    res.render('ask', { title: '提问成功' });
+  });
+  router.db.end();
 });
 
 module.exports = router;
