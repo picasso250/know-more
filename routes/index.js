@@ -68,7 +68,7 @@ router.post('/ask', function(req, res, next) {
   router.db.query('INSERT INTO question SET ?', req.body, function(err, result) {
     if (err) throw err;
     console.log(result.insertId);
-    res.render('ask', { title: '提问成功' });
+    res.json({code: 0, data: {url: '/q/'+result.insertId}});
   });
   router.db.end();
 });
