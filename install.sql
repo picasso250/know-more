@@ -15,3 +15,10 @@ CREATE TABLE `know_more`.`question` (
   `description` TEXT NULL,
   `create_time` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`));
+CREATE TABLE `know_more`.`answer` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `qid` INT UNSIGNED NOT NULL,
+  `uid` INT UNSIGNED NOT NULL,
+  `content` TEXT NOT NULL,
+  `create_time` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`));

@@ -76,20 +76,31 @@ router.get('/q/:qid', function(req, res, next) {
       console.log('no user');
     } else {
       var question = rows[0];
-      res.render('question', { title: question.title, question: question });
+      var data = { title: question.title, question: question, show_answer: req.session.uid > 0 }
+      res.render('question', data);
     }
   });
+  router.db.end();
 });
 
-router.get('/answer/:qid', function(req, res, next) {
+router.post('/answer/:qid', function(req, res, next) {
   var params = [req.params.qid];
   router.db.query('SELECT *from question where id=? limit 1', params, function(err, rows, fields) {
     if (err) throw err;
     if (rows.length === 0) {
-      console.log('no user');
+      console.log('no question');
     } else {
-      var question = rows[0];
-      res.render('question', { title: question.title, question: question });
+      console.log('find question',req.params.qid);
+      params = req.body;
+      params.qid = req.params.qid;
+      params.uid = req.session.uid;
+      console.log(params);
+      router.db.query('INSERT INTO answer SET ?', params, function(err, result) {
+        if (err) throw err;
+        router.db.end();
+        console.log(result.insertId);
+        res.render('index', { title: '回答成功' });
+      });
     }
   });
 });
