@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  p= question.description
+  h3 answers
+  for a in answers
+    p= a.content
+  if (show_answer)
+    form(method='post',action="/answer/#{question.id}") 
+      //- todo everybody can propose an edit of f an answer, but open another answser need high user level
+      textarea(name='content',placeholder="回答问题")
+      button(type='submit')= "回答问题"

@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  form(method='post',role='post')
+    #Alert
+    input(type='text',name='title',placeholder="提个问题")
+    textarea(name='description',placeholder="问题描述")
+    button(type='submit')= "提问题"
