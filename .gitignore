@@ -43,3 +43,6 @@ Temporary Items
 .apdisk
 node_modules/
 public/bootstrap/
+
+public/jquery-2.0.3.min.js
+config.php
