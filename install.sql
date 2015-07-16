@@ -22,3 +22,5 @@ CREATE TABLE `know_more`.`answer` (
   `content` TEXT NOT NULL,
   `create_time` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`));
+ALTER TABLE `know_more`.`question` 
+CHANGE COLUMN `description` `detail` TEXT NULL ;

@@ -1,0 +1,32 @@
+<ul>
+<?php foreach ($GLOBALS['db']->all_question() as $q): ?>
+	<li>
+		<a href="/question/<?= $q['id'] ?>"><?= $q['title'] ?></a>
+	</li>
+<?php endforeach ?>
+</ul>
+
+<form action="/new_question" ajax>
+	<div class="alert-msg"></div>
+	<div>
+		<input name="question">
+	</div>
+	<div>
+		<div>问题说明（可选）：</div>
+		<textarea name="detail"></textarea>
+	</div>
+	<div>
+		<div>搜索话题</div>
+		<input>
+	</div>
+	<div>
+		<label>
+			<input type="checkbox">
+			匿名
+		</label>
+		|
+		<span>分享到</span>
+		<a href="">取消</a>
+		<button>发布</button>
+	</div>
+</form>

@@ -1,0 +1,26 @@
+#TopNav {
+	list-style: none;
+	line-height: 39px;
+}
+#TopNav li {
+	display: inline-block;
+}
+#AccountWindow {
+	float: right;
+}
+#BigSearch {
+	float: left;
+	margin: 9px 23px 0 52px;
+}
+#Logo {
+	float: left;
+	margin: 0;
+}
+header {
+	height: 56px;
+	border-bottom: solid 1px;
+}
+#HeaderInner {
+	width: 1000px;
+	margin: auto;
+}
