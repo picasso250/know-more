@@ -1,0 +1,53 @@
+<div>
+	<h1><?= $question['title'] ?></h1>
+	<div><?= nl2br(htmlspecialchars($question['detail'])) ?></div>
+	<div>17个评论</div>
+	<div>分享</div>
+	<div>邀请回答</div>
+</div>
+
+<div id="QuestionSec2">
+	<div id="SortBtn">按投票排序</div>
+	<div id="AnswerCount"><?= count($answers) ?>个回答</div>
+</div>
+
+<ul>
+	<?php foreach ($answers as $a): ?>
+		<li>
+			<div>111</div>
+			<div><?= $a['user_show_name'] ?></div>
+			<div><?= $a['user_detail'] ?></div>
+			<img src="">
+			<div>
+				<?php foreach ($up_users as $u): ?>
+					<a href=""><?= $u['show_name'] ?></a>
+				<?php endforeach ?>
+				等人赞同
+			</div>
+			<div><?= $a['content'] ?></div>
+			<div>
+				<div>编辑与<?= $a['edit_time'] ?></div>
+				<div>111条评论</div>
+			</div>
+		</li>
+	<?php endforeach ?>
+</ul>
+
+<?php if (user_id()): ?>
+<form action="/add_answer/<?= $question['id'] ?>" ajax>
+	<div>
+		<span><?= $GLOBALS['user']['show_name'] ?></span>，<span><?= $GLOBALS['user']['detail'] ?></span>
+		<img src="">
+	</div>
+	<div>
+		<textarea name="content"></textarea>
+	</div>
+	<div>
+		<label>
+			<input type="checkbox">
+			匿名
+		</label>
+		<button>发布回答</button>
+	</div>
+</form>
+<?php endif ?>
