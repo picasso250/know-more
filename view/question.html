@@ -11,29 +11,32 @@
 	<div id="AnswerCount"><?= count($answers) ?>个回答</div>
 </div>
 
-<ul>
+<ul id="QuestionGroup">
 	<?php foreach ($answers as $a): ?>
-		<li>
-			<div>111</div>
-			<div><?= $a['user_show_name'] ?></div>
-			<div><?= $a['user_detail'] ?></div>
+		<li class="answer-item">
+			<div class="vote-btn" data-url="/vote/<?= $a['id'] ?>">
+				<div data-vote="1">Up<br>
+					<?= count($a['up']) ?></div>
+				<div data-vote="-1">Down</div>
+			</div>
+			<span><?= $a['user']['show_name'] ?></span>，<span><?= $a['user']['detail'] ?></span>
 			<img src="">
-			<div>
-				<?php foreach ($up_users as $u): ?>
+			<div class="upvote-users">
+				<?php foreach ($a['up_users'] as $u): ?>
 					<a href=""><?= $u['show_name'] ?></a>
 				<?php endforeach ?>
 				等人赞同
 			</div>
 			<div><?= $a['content'] ?></div>
 			<div>
-				<div>编辑与<?= $a['edit_time'] ?></div>
+				<div>编辑于<?= $a['edit_time'] ?></div>
 				<div>111条评论</div>
 			</div>
 		</li>
 	<?php endforeach ?>
 </ul>
 
-<?php if (user_id()): ?>
+<?php if (user_id() && !$answer_by_me): ?>
 <form action="/add_answer/<?= $question['id'] ?>" ajax>
 	<div>
 		<span><?= $GLOBALS['user']['show_name'] ?></span>，<span><?= $GLOBALS['user']['detail'] ?></span>

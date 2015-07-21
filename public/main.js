@@ -29,4 +29,12 @@ $(function () {
 			alert.removeClass('alert-hidden').text(ret.message);
 		}, 'json');
 	});
+
+	var voteParent = $('.vote-btn');
+	voteParent.find('div').click(function () {
+		var $this = $(this);
+		$.post(voteParent.data('url'), {vote: $this.data('vote')}, function (ret) {
+			console.log(ret);
+		}, 'json')
+	})
 });

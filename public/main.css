@@ -36,3 +36,22 @@ header {
 #SortBtn {
 	float: right;
 }
+.answer-item {
+	list-style: none;
+	position: relative;
+}
+.vote-btn {
+	position: absolute;
+	left: -50px;
+}
+.vote-btn div {
+	border: solid 1px;
+	margin: 3px 0 3px 0px;
+}
+#QuestionGroup {
+	padding: 0;
+}
+.upvote-users {
+	font-size: small;
+	color: #555;
+}
