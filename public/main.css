@@ -47,6 +47,14 @@ header {
 .vote-btn div {
 	border: solid 1px;
 	margin: 3px 0 3px 0px;
+	text-align: center;
+	cursor: pointer;
+}
+.vote-btn div:hover {
+	background: #eee;
+}
+.vote-btn div span {
+	display: block;
 }
 #QuestionGroup {
 	padding: 0;
@@ -54,4 +62,15 @@ header {
 .upvote-users {
 	font-size: small;
 	color: #555;
+}
+#ColumnsWrap {
+
+}
+#LeftQuestion {
+	float: left;
+	width: 718px;
+}
+#RightQuestion {
+	float: left;
+	width: 280px;
 }

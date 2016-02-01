@@ -24,14 +24,18 @@ In rfc2045
 #include <string.h>
 
 char *char_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-char *error_table = {
+char char_table_flip[128];
+
+char *error_table[] = {
 	"OK",
 	"Length is not 4 or 4's", // 1
+	"Empty string", // 2
+	"not enough memory", // 3
 };
 
 char * base64encode(void * s, int len)
 {
-	printf("encode '%s'(%d)\n", s, len);
+	// printf("encode '%s'(%d)\n", s, len);
 	if (len <= 0)
 	{
 		return NULL;
@@ -44,6 +48,10 @@ char * base64encode(void * s, int len)
 		n = len / 3 + 1;
 	}
 	char *ret = malloc(sizeof(char)*n*4+1); // string must have an end
+	if (ret == NULL)
+	{
+		return NULL;
+	}
 
 	// expand 3 bytes to 4 bytes
 	char *sp = (char *)s;
@@ -53,7 +61,7 @@ char * base64encode(void * s, int len)
 		unsigned a0 = sp[i*3];
 		unsigned a1 = i*3+1 >= len ? 0 : sp[i*3+1]; // 0 for padding
 		unsigned a2 = i*3+2 >= len ? 0 : sp[i*3+2];
-		printf("('%c', 0x%x) ('%c', 0x%x) ('%c', 0x%x)\n", a0, a0, a1, a1, a2, a2);
+		// printf("('%c', 0x%x) ('%c', 0x%x) ('%c', 0x%x)\n", a0, a0, a1, a1, a2, a2);
 		int i0, i1, i2, i3;
 		char b0, b1, b2, b3;
 		i0 = a0 >> 2;
@@ -72,34 +80,64 @@ char * base64encode(void * s, int len)
 		// 如果最后剩下一个输入数据，编码结果后加2个“=”；
 		if (i*3+1 >= len)
 		{
+			ret[i*4+2] = '=';
 			ret[i*4+3] = '=';
 		}
 		else if (i*3+2 >= len)
 		{
-			ret[i*4+2] = '=';
 			ret[i*4+3] = '=';
 		}
 	}
 	ret[i*4] = 0;
 	return ret;
 }
-// return error code, 0 is OK
-int base64decode(char *src, void *data)
+void init_char_table_flip()
 {
-	int len = strlen(s);
-	if (len % 4 !== 0)
+	for (int i = 0; i < strlen(char_table); ++i)
+	{
+		char_table_flip[char_table[i]] = i;
+	}
+	char_table_flip['='] = 0;
+}
+// return error code, 0 is OK
+int base64decode(char *src, void **data_p, int *size_p)
+{
+	int len = strlen(src);
+	if (len == 0) {
+		return 2;
+	}
+	if (len % 4 != 0)
 	{
 		return 1;
 	}
-	char *ret = malloc(sizeof(char)*len/4*3);
+	int size = len/4*3;
+	char *ret = malloc(sizeof(char)*size);
+	if (ret == NULL)
+	{
+		return 3;
+	}
+	init_char_table_flip();
 	// assume no padding
 	for (int i = 0; i < len/4; ++i)
 	{
-		unsigned a0 = src[i*4+0];
-		unsigned a1 = src[i*4+1];
-		unsigned a2 = src[i*4+2];
-		unsigned a3 = src[i*4+3];
-		
+		unsigned a0 = char_table_flip[ src[i*4+0] ];
+		unsigned a1 = char_table_flip[ src[i*4+1] ];
+		unsigned a2 = char_table_flip[ src[i*4+2] ];
+		unsigned a3 = char_table_flip[ src[i*4+3] ];
+		char b0, b1, b2;
+		ret[i*3+0] = b0 = (char) (a0 << 2) | a1 >> 4;
+		ret[i*3+1] = b1 = (char) ((a1 & 0xF) << 4) | (a2 >> 2);
+		ret[i*3+2] = b2 = (char) ((a2 & 0x3) << 6) | a3;
 	}
+	*data_p = ret;
+	if (src[len-2] == '=') // two =
+	{
+		size -= 2;
+	}
+	if (src[len-1] == '=') // only one =
+	{
+		size -= 1;
+	}
+	*size_p = size;
 	return 0;
 }

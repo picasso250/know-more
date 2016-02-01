@@ -7,6 +7,12 @@ function index()
     \Occam\render();
 }
 
+function logout()
+{
+    user_id(0);
+    header('Location:/');
+}
+
 function new_question()
 {
     global $db;
@@ -16,7 +22,8 @@ function new_question()
     $title = $_POST['question'];
     $detail = isset($_POST['detail']) ? $_POST['detail'] : '';
     $id = $db->insert('question', compact('title', 'detail'));
-    return \Occam\echo_json(compact('id'));
+    $url = '/';
+    return \Occam\echo_json(compact('url'));
 }
 
 function question($id)
@@ -32,9 +39,16 @@ function question($id)
         }
         $answer['user'] = $db->get_user_by_id($answer['uid']);
         $answer['up'] = $db->all_vote_by_aid_and_vote($answer['id'], 1);
+        $up_users = [];
         foreach ($answer['up'] as $vote) {
-            $answer['up_users'][] = $db->get_user_by_id($vote['uid']);
+            $up_users[] = $db->get_user_by_id($vote['uid']);
         }
+        $answer['up_users'] = $up_users;
+        $comments = $db->all_answer_comment_by_aid($answer['id']);
+        foreach ($comments as &$c) {
+            $c['user'] = $db->get_user_by_id($c['uid']);
+        }
+        $answer['comments'] = $comments;
     }
 
     \Occam\render(compact('question', 'answers', 'answer_by_me'));
@@ -62,7 +76,21 @@ function add_answer($qid)
     $content = $_POST['content'];
     $data = compact('content', 'qid');
     $data['uid'] = user_id();
-    $data['edit_time'] = $db::timestamp();
+    $data['edit_time'] = null;
     $id = $db->insert('answer', $data);
+    return \Occam\echo_json(compact('id'));
+}
+function comment_answer($aid)
+{
+    global $db;
+    if (empty($_POST['content'])) {
+        return \Occam\echo_json(1, 'empty');
+    }
+    $data = [
+        'content' => $_POST['content'],
+        'uid' => user_id(),
+        'aid' => $aid,
+    ];
+    $id = $db->insert('answer_comment', $data);
     return \Occam\echo_json(compact('id'));
 }

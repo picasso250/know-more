@@ -14,6 +14,7 @@
 			<img src="">
 			<?php if ($GLOBALS['user']): ?>
 				<span><?= $GLOBALS['user']['show_name'] ?></span>
+				<a href="/logout">logout</a>
 			<?php else: ?>
 				<a href="http://localhost:81/login/1?<?= http_build_query(['url' => 'http://localhost/']) ?>">login</a>
 			<?php endif ?>

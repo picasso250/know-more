@@ -33,6 +33,9 @@ $(function () {
 	var voteParent = $('.vote-btn');
 	voteParent.find('div').click(function () {
 		var $this = $(this);
+		var span = $this.find('span');
+		var n = parseInt(span.text());
+		span.text(1+n);
 		$.post(voteParent.data('url'), {vote: $this.data('vote')}, function (ret) {
 			console.log(ret);
 		}, 'json')
