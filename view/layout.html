@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>x</title>
+	<link rel="stylesheet" type="text/css" href="/main.css">
+	<script type="text/javascript" src="/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="/main.js"></script>
+</head>
+<body>
+
+<header>
+	<div id="HeaderInner">
+		<div id="AccountWindow">
+			<img src="">
+			<?php if ($GLOBALS['user']): ?>
+				<span><?= $GLOBALS['user']['show_name'] ?></span>
+				<a href="/logout">logout</a>
+			<?php else: ?>
+				<a href="http://localhost:81/login/1?<?= http_build_query(['url' => 'http://localhost/']) ?>">login</a>
+			<?php endif ?>
+		</div>
+		<h1 id="Logo">知乎Copy</h1>
+		<form id="BigSearch">
+			<input>
+			<button>提问</button>
+		</form>
+		<ul id="TopNav">
+			<li><a href="/">首页</a></li>
+			<li><a href="">话题</a></li>
+			<li><a href="">发现</a></li>
+			<li><a href="">消息</a></li>
+		</ul>
+	</div>
+</header>
+
+<div id="PageContent"><?php include __DIR__."/$GLOBALS[router].html" ?></div>
+
+</body>
+</html>

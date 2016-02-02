@@ -1,0 +1,76 @@
+#TopNav {
+	list-style: none;
+	line-height: 39px;
+}
+#TopNav li {
+	display: inline-block;
+}
+#AccountWindow {
+	float: right;
+}
+#BigSearch {
+	float: left;
+	margin: 9px 23px 0 52px;
+}
+#Logo {
+	float: left;
+	margin: 0;
+}
+header {
+	height: 56px;
+	border-bottom: solid 1px;
+}
+#HeaderInner {
+	width: 1000px;
+	margin: auto;
+}
+#PageContent {
+	width: 1000px;
+	margin: auto;
+}
+#QuestionSec2 {
+	border-bottom: solid 1px;
+	border-top: solid 1px;
+	line-height: 44px;
+}
+#SortBtn {
+	float: right;
+}
+.answer-item {
+	list-style: none;
+	position: relative;
+}
+.vote-btn {
+	position: absolute;
+	left: -50px;
+}
+.vote-btn div {
+	border: solid 1px;
+	margin: 3px 0 3px 0px;
+	text-align: center;
+	cursor: pointer;
+}
+.vote-btn div:hover {
+	background: #eee;
+}
+.vote-btn div span {
+	display: block;
+}
+#QuestionGroup {
+	padding: 0;
+}
+.upvote-users {
+	font-size: small;
+	color: #555;
+}
+#ColumnsWrap {
+
+}
+#LeftQuestion {
+	float: left;
+	width: 718px;
+}
+#RightQuestion {
+	float: left;
+	width: 280px;
+}
